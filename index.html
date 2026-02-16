@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestão Financeira | CLJ Ns Paz</title>
+    <title>Financeiro | CLJ Ns Paz</title>
     
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css">
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
@@ -13,107 +13,156 @@
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
 
         :root {
-            --primary: #3a539b;
-            --success: #10b981;
-            --danger: #ef4444;
-            --bg: #f4f7fa;
-            --white: #ffffff;
+            --primary-blue: #3a539b;
+            --success: #00c091;
+            --danger: #d63031;
+            --bg-body: #f1ede8;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
-        body { background-color: var(--bg); color: #1e293b; }
+        
+        body { 
+            background-color: var(--bg-body); 
+            color: #2d3436; 
+            min-height: 100vh;
+        }
 
-        /* HEADER */
+        /* CABEÇALHO AJUSTADO PARA NÃO SOBREPOR */
         header {
-            background: linear-gradient(135deg, var(--primary) 0%, #1e293b 100%);
-            padding: 40px 20px 110px;
+            background-color: var(--primary-blue);
+            background-image: linear-gradient(180deg, #4d6df3 0%, #3a539b 100%);
+            padding: 40px 20px 60px; /* Aumentamos o padding inferior */
             text-align: center;
             color: white;
-            clip-path: ellipse(150% 100% at 50% 0%);
+            position: relative;
         }
-        .logo-container {
-            width: 90px;
-            height: 90px;
-            background: white;
-            border-radius: 22px;
+
+        .logo-box {
+            width: 90px; height: 90px;
+            background: white; border-radius: 20px;
             margin: 0 auto 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
-        .logo-container img { width: 70%; height: auto; }
-        header h1 { font-size: 28px; font-weight: 800; margin-bottom: 5px; }
-        header p { opacity: 0.8; font-size: 14px; }
+        .logo-box img { width: 75%; height: auto; }
+        
+        header h1 { font-size: 28px; font-weight: 800; }
+        header p { opacity: 0.9; font-size: 14px; margin-top: 5px; }
 
-        .container { max-width: 1100px; margin: -70px auto 50px; padding: 0 20px; }
+        /* CONTAINER PRINCIPAL */
+        .container { 
+            max-width: 1100px; 
+            margin: 0 auto; 
+            padding: 0 20px 50px;
+            position: relative;
+            z-index: 10;
+        }
 
-        /* CARDS DE RESUMO */
-        .summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 30px; }
-        .s-card { background: var(--white); padding: 25px; border-radius: 24px; box-shadow: 0 10px 25px rgba(0,0,0,0.03); text-align: center; border: 1px solid #edf2f7; }
-        .s-card span { font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; }
-        .s-card h2 { font-size: 24px; margin-top: 8px; font-weight: 800; }
+        /* CARTÕES DE RESUMO - AGORA COM MARGEM POSITIVA PARA NÃO SUBIR DEMAIS */
+        .summary-row { 
+            display: grid; 
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 20px; 
+            margin-top: -30px; /* Subida leve e controlada */
+            margin-bottom: 30px; 
+        }
 
-        /* CONTEÚDO PRINCIPAL */
-        .main-layout { display: grid; grid-template-columns: 1.6fr 1fr; gap: 25px; }
-        .panel { background: var(--white); padding: 25px; border-radius: 24px; box-shadow: 0 10px 25px rgba(0,0,0,0.03); border: 1px solid #edf2f7; }
+        .card-val { 
+            background: white; 
+            padding: 25px; 
+            border-radius: 20px; 
+            text-align: center; 
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        .card-val span { font-size: 12px; font-weight: 700; color: #636e72; text-transform: uppercase; }
+        .card-val h2 { font-size: 32px; font-weight: 800; margin-top: 5px; }
+
+        /* GRID PRINCIPAL */
+        .grid-main { 
+            display: grid; 
+            grid-template-columns: 1.6fr 1fr; 
+            gap: 25px; 
+        }
+
+        .white-panel { 
+            background: white; 
+            padding: 25px; 
+            border-radius: 25px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04); 
+            height: fit-content;
+        }
 
         /* FORMULÁRIO */
         .form-group { margin-bottom: 15px; }
-        label { display: block; font-size: 12px; font-weight: 700; margin-bottom: 6px; color: #64748b; }
-        input, select { width: 100%; padding: 12px 16px; border: 2px solid #f1f5f9; border-radius: 12px; font-size: 14px; outline: none; transition: 0.2s; }
-        input:focus { border-color: var(--primary); background: #f8fafc; }
+        label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 6px; color: #636e72; }
+        input, select { 
+            width: 100%; padding: 12px 16px; 
+            border: 2px solid #edf2f7; border-radius: 12px; 
+            font-size: 14px; outline: none; transition: 0.2s; 
+        }
+        input:focus { border-color: var(--primary-blue); background: #fdfdfd; }
         
-        .btn-add { width: 100%; background: var(--primary); color: white; padding: 16px; border: none; border-radius: 14px; font-weight: 700; cursor: pointer; transition: 0.3s; margin-top: 10px; font-size: 15px; }
-        .btn-add:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(58, 83, 155, 0.25); }
-        .btn-print { width: 100%; background: #1e293b; color: white; padding: 14px; border-radius: 14px; font-weight: 700; border: none; margin-top: 12px; cursor: pointer; }
+        .btn-reg { 
+            width: 100%; background: var(--primary-blue); color: white; 
+            padding: 16px; border: none; border-radius: 15px; 
+            font-weight: 700; cursor: pointer; font-size: 15px;
+            transition: 0.3s; margin-top: 5px;
+        }
+        .btn-reg:hover { filter: brightness(1.1); transform: translateY(-2px); }
 
-        /* CALENDÁRIO */
-        #calendar { font-size: 13px; }
-        .fc-toolbar-title { font-size: 16px !important; font-weight: 800; }
-        .fc-button-primary { background-color: var(--primary) !important; border: none !important; }
+        .btn-print {
+            width: 100%; background: #2d3436; color: white;
+            padding: 14px; border-radius: 12px; font-weight: 700;
+            border: none; margin-top: 15px; cursor: pointer;
+        }
 
-        /* LISTA DE LOGS */
-        .logs-section { margin-top: 30px; }
-        .log-item { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; background: white; border-radius: 18px; margin-bottom: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.01); border-left: 6px solid #e2e8f0; }
+        /* HISTÓRICO */
+        .log-item { 
+            display: flex; align-items: center; justify-content: space-between; 
+            padding: 15px 20px; background: white; border-radius: 15px; 
+            margin-bottom: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+            border-left: 6px solid #dfe6e9;
+        }
         .log-item.income { border-left-color: var(--success); }
         .log-item.expense { border-left-color: var(--danger); }
-        .log-info b { display: block; font-size: 15px; color: #1e293b; }
-        .log-info small { color: #94a3b8; font-size: 12px; font-weight: 500; }
-        .log-val { font-weight: 800; font-size: 16px; }
+        
+        @media (max-width: 850px) {
+            .summary-row, .grid-main { grid-template-columns: 1fr; }
+            .summary-row { margin-top: 20px; }
+        }
 
-        @media (max-width: 900px) { .main-layout, .summary-grid { grid-template-columns: 1fr; } }
-        @media print { .no-print { display: none; } header { clip-path: none; padding-bottom: 40px; } .container { margin-top: 20px; } }
+        @media print { .no-print { display: none; } }
     </style>
 </head>
 <body>
 
 <header>
-    <div class="logo-container">
-        <img src="logo.png" alt="Logo CLJ">
+    <div class="logo-box">
+        <img src="logo.png" alt="Logo">
     </div>
     <h1>CLJ Nossa Senhora da Paz</h1>
     <p>Gestão de Caixa e Lançamentos Financeiros</p>
 </header>
 
 <div class="container">
-    <div class="summary-grid">
-        <div class="s-card"><span>Entradas</span><h2 style="color:var(--success)" id="ti">R$ 0,00</h2></div>
-        <div class="s-card"><span>Saídas</span><h2 style="color:var(--danger)" id="te">R$ 0,00</h2></div>
-        <div class="s-card"><span>Saldo Atual</span><h2 style="color:var(--primary)" id="tt">R$ 0,00</h2></div>
+    <div class="summary-row">
+        <div class="card-val"><span>Entradas</span><h2 style="color:var(--success)" id="ti">R$ 0,00</h2></div>
+        <div class="card-val"><span>Saídas</span><h2 style="color:var(--danger)" id="te">R$ 0,00</h2></div>
+        <div class="card-val"><span>Saldo Geral</span><h2 style="color:var(--primary-blue)" id="tt">R$ 0,00</h2></div>
     </div>
 
-    <div class="main-layout">
-        <div class="panel">
-            <h3 style="margin-bottom:20px;">📅 Movimentações no Mês</h3>
+    <div class="grid-main">
+        <div class="white-panel">
+            <h3 style="margin-bottom:15px;">📅 Movimentações no Mês</h3>
             <div id="calendar"></div>
         </div>
 
-        <div class="panel no-print">
-            <h3 style="margin-bottom:20px;">📝 Novo Registro</h3>
+        <div class="white-panel no-print">
+            <h3 style="margin-bottom:15px;">📝 Novo Registro</h3>
             <div class="form-group"><label>Data</label><input type="date" id="d"></div>
             <div class="form-group"><label>Descrição</label><input type="text" id="ds" placeholder="Ex: Venda de doces"></div>
-            <div class="form-group"><label>Valor (R$)</label><input type="number" id="v" placeholder="0,00"></div>
+            <div class="form-group"><label>Valor (R$)</label><input type="number" id="v" placeholder="0,00" step="0.01"></div>
             <div class="form-group">
                 <label>Tipo</label>
                 <select id="t">
@@ -121,20 +170,21 @@
                     <option value="expense">Saída (-)</option>
                 </select>
             </div>
-            <button class="btn-add" onclick="add()">Registrar no Sistema</button>
-            <button class="btn-print" onclick="window.print()">🖨️ Imprimir Relatório</button>
+            <button class="btn-reg" onclick="add()">Registrar no Sistema</button>
+            <button class="btn-print" onclick="window.print()">Imprimir Relatório</button>
         </div>
     </div>
 
-    <div class="logs-section">
-        <h3 style="margin-bottom:15px;">📋 Histórico de Logs</h3>
-        <div id="tbody"></div>
+    <div style="margin-top: 30px;">
+        <h3 style="margin-bottom:15px;">📋 Histórico</h3>
+        <div id="logs-container"></div>
     </div>
 </div>
 
 <script>
+    // Mantenha seu script do GitHub aqui
     const GITHUB = {
-        token: "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I", // <--- COLOQUE SEU TOKEN AQUI
+        token: "SEU_TOKEN_AQUI", 
         user: "teofilo823",
         repo: "Gestao-Ns-Paz",
         path: "database.json"
@@ -143,7 +193,6 @@
     let entries = [];
     let calendar;
 
-    // Inicialização
     document.addEventListener('DOMContentLoaded', function() {
         const calendarEl = document.getElementById('calendar');
         calendar = new FullCalendar.Calendar(calendarEl, {
@@ -156,16 +205,9 @@
         load();
     });
 
-    // Carregar do GitHub e LocalStorage (Segurança dupla)
     async function load() {
-        // Primeiro tenta carregar o que está salvo no navegador para ser rápido
-        const localData = localStorage.getItem('clj_data');
-        if(localData) {
-            entries = JSON.parse(localData);
-            render();
-        }
-
-        // Depois busca a versão oficial do GitHub
+        const local = localStorage.getItem('clj_db');
+        if(local) { entries = JSON.parse(local); render(); }
         try {
             const url = `https://api.github.com/repos/${GITHUB.user}/${GITHUB.repo}/contents/${GITHUB.path}`;
             const r = await fetch(url, { headers: { "Authorization": `token ${GITHUB.token}` } });
@@ -173,86 +215,55 @@
                 const d = await r.json();
                 const content = JSON.parse(decodeURIComponent(escape(atob(d.content))));
                 entries = content.entries || [];
-                localStorage.setItem('clj_data', JSON.stringify(entries));
+                localStorage.setItem('clj_db', JSON.stringify(entries));
                 render();
             }
-        } catch(e) { console.warn("Modo Offline ou Token ausente."); }
+        } catch(e) { console.log("Erro ao carregar"); }
     }
 
-    // Sincronizar com o arquivo database.json na pasta do GitHub
     async function sync() {
-        localStorage.setItem('clj_data', JSON.stringify(entries));
+        localStorage.setItem('clj_db', JSON.stringify(entries));
         try {
             const url = `https://api.github.com/repos/${GITHUB.user}/${GITHUB.repo}/contents/${GITHUB.path}`;
             const get = await fetch(url, { headers: { "Authorization": `token ${GITHUB.token}` } });
             const file = await get.json();
-            
             const body = btoa(unescape(encodeURIComponent(JSON.stringify({ entries }, null, 4))));
-            
             await fetch(url, {
                 method: "PUT",
                 headers: { "Authorization": `token ${GITHUB.token}`, "Content-Type": "application/json" },
-                body: JSON.stringify({ message: "Atualização de Caixa", content: body, sha: file.sha })
+                body: JSON.stringify({ message: "Update", content: body, sha: file.sha })
             });
-        } catch(e) { console.error("Erro ao subir para o GitHub."); }
+        } catch(e) { console.log("Erro ao salvar"); }
     }
 
     function render() {
-        const b = document.getElementById('tbody');
-        b.innerHTML = '';
-        let i=0, e=0;
-        let events = [];
-
+        const container = document.getElementById('logs-container');
+        container.innerHTML = '';
+        let tin = 0, tout = 0, events = [];
         entries.sort((a,b) => new Date(b.date) - new Date(a.date));
-
         entries.forEach(item => {
-            // Desenhar Logs
             const log = document.createElement('div');
             log.className = `log-item ${item.type}`;
-            log.innerHTML = `
-                <div class="log-info">
-                    <b>${item.description}</b>
-                    <small>${item.date.split('-').reverse().join('/')}</small>
-                </div>
-                <div class="log-val" style="color:${item.type==='income'?'var(--success)':'var(--danger)'}">
-                    ${item.type==='income'?'+':'-'} R$ ${parseFloat(item.amount).toLocaleString('pt-BR', {minimumFractionDigits:2})}
-                </div>
-            `;
-            b.appendChild(log);
-
-            // Somar totais
-            if(item.type==='income') i += parseFloat(item.amount); else e += parseFloat(item.amount);
-
-            // Preparar Calendário
-            events.push({
-                title: `${item.type==='income'?'+':'-'} R$ ${item.amount}`,
-                start: item.date,
-                color: item.type === 'income' ? '#10b981' : '#ef4444'
-            });
+            log.innerHTML = `<div><b>${item.description}</b><br><small>${item.date.split('-').reverse().join('/')}</small></div>
+                             <div style="font-weight:800; color:${item.type==='income'?'var(--success)':'var(--danger)'}">
+                             ${item.type==='income'?'+':'-'} R$ ${parseFloat(item.amount).toLocaleString('pt-BR', {minimumFractionDigits:2})}</div>`;
+            container.appendChild(log);
+            if(item.type==='income') tin += parseFloat(item.amount); else tout += parseFloat(item.amount);
+            events.push({ title: `${item.type==='income'?'+':'-'} R$ ${item.amount}`, start: item.date, color: item.type === 'income' ? '#00c091' : '#d63031' });
         });
-
-        document.getElementById('ti').innerText = `R$ ${i.toLocaleString('pt-BR', {minimumFractionDigits:2})}`;
-        document.getElementById('te').innerText = `R$ ${e.toLocaleString('pt-BR', {minimumFractionDigits:2})}`;
-        document.getElementById('tt').innerText = `R$ ${(i-e).toLocaleString('pt-BR', {minimumFractionDigits:2})}`;
-
+        document.getElementById('ti').innerText = `R$ ${tin.toLocaleString('pt-BR', {minimumFractionDigits:2})}`;
+        document.getElementById('te').innerText = `R$ ${tout.toLocaleString('pt-BR', {minimumFractionDigits:2})}`;
+        document.getElementById('tt').innerText = `R$ ${(tin-tout).toLocaleString('pt-BR', {minimumFractionDigits:2})}`;
         calendar.removeAllEvents();
         calendar.addEventSource(events);
     }
 
     function add() {
-        const date = document.getElementById('d').value;
-        const description = document.getElementById('ds').value;
-        const amount = document.getElementById('v').value;
-        const type = document.getElementById('t').value;
-
-        if(!date || !description || !amount) return alert("Por favor, preencha todos os campos.");
-
-        entries.push({ date, description, amount, type });
-        render();
-        sync();
-
-        document.getElementById('ds').value = '';
-        document.getElementById('v').value = '';
+        const d = document.getElementById('d').value, ds = document.getElementById('ds').value, v = document.getElementById('v').value, t = document.getElementById('t').value;
+        if(!d || !ds || !v) return alert("Preencha tudo!");
+        entries.push({ date: d, description: ds, amount: v, type: t });
+        render(); sync();
+        document.getElementById('ds').value = ''; document.getElementById('v').value = '';
     }
 
     document.getElementById('d').valueAsDate = new Date();
