@@ -6,118 +6,120 @@
     <title>Financeiro | CLJ Ns Paz</title>
     <link rel="icon" type="image/png" href="logo.png">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap');
 
         :root {
             --primary: #4361ee;
-            --secondary: #3f37c9;
-            --success: #00b894;
-            --danger: #d63031;
-            --bg: #f2e9e1; /* Cor de fundo creme para combinar com a imagem */
-            --glass: rgba(255, 255, 255, 1);
+            --bg: #f2e9e1; 
+            --white: #ffffff;
             --text: #2b2d42;
         }
 
-        * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; margin: 0; padding: 0; }
         
-        body { 
-            background-color: var(--bg);
-            margin: 0; color: var(--text); min-height: 100vh;
-        }
+        body { background-color: var(--bg); color: var(--text); padding-bottom: 50px; }
 
         header {
-            background: #5a75e6; /* Azul vibrante conforme a imagem */
-            padding: 40px 20px 80px 20px;
+            background: #5a75e6;
+            padding: 40px 20px 100px;
             text-align: center;
             color: white;
         }
 
-        .header-logo { width: 100px; border-radius: 12px; margin-bottom: 15px; }
+        .header-logo { width: 100px; margin-bottom: 10px; border-radius: 10px; }
 
-        .container { max-width: 1100px; margin: -60px auto 50px; padding: 0 20px; }
+        .container { max-width: 1100px; margin: -60px auto 0; padding: 0 20px; }
 
-        /* DASHBOARD CORRIGIDO */
+        /* FORÇAR LADO A LADO - DASHBOARD */
         .dashboard { 
-            display: flex; 
-            justify-content: space-between;
+            display: grid; 
+            grid-template-columns: 1fr 1fr 1fr; /* Força 3 colunas iguais */
             gap: 20px; 
-            margin-bottom: 30px; 
-            flex-wrap: wrap;
+            margin-bottom: 25px;
         }
 
         .card { 
-            flex: 1;
-            min-width: 280px;
-            background: var(--glass);
-            padding: 25px; 
+            background: var(--white);
+            padding: 30px; 
             border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
             text-align: center;
         }
-        .card h2 { font-size: 36px; margin: 0; font-weight: 700; }
-
-        .income { color: var(--success); }
-        .expense { color: var(--danger); }
+        .card h2 { font-size: 28px; font-weight: 700; }
+        .income { color: #00b894; }
+        .expense { color: #d63031; }
         .balance { color: var(--primary); }
 
-        /* FORMULÁRIO CORRIGIDO */
+        /* FORÇAR LADO A LADO - FORMULÁRIO */
         .glass-panel { 
-            background: var(--glass);
-            padding: 40px; border-radius: 30px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+            background: var(--white);
+            padding: 30px; 
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
             margin-bottom: 30px;
         }
 
         .form-grid { 
-            display: flex;
+            display: grid;
+            grid-template-columns: 1.2fr 2fr 1fr 1fr; /* Define tamanhos específicos para cada campo */
             gap: 15px;
-            flex-wrap: wrap;
-            align-items: center;
+            align-items: end;
         }
 
-        .form-grid input, .form-grid select { 
-            flex: 1;
-            min-width: 180px;
-            padding: 15px; 
+        input, select { 
+            width: 100%; 
+            padding: 14px; 
             border: 1px solid #ddd; 
             border-radius: 12px; 
-            outline: none; font-size: 16px;
+            font-size: 15px;
+            outline: none;
         }
 
         .btn-main { 
-            background: var(--primary); color: white; border: none; 
-            padding: 18px; border-radius: 15px; font-weight: 600; 
-            cursor: pointer; transition: 0.3s; width: 100%;
-            margin-top: 15px; font-size: 16px;
+            grid-column: 1 / -1; /* Botão ocupa a linha inteira abaixo dos campos */
+            background: var(--primary); 
+            color: white; 
+            border: none; 
+            padding: 18px; 
+            border-radius: 15px; 
+            font-weight: 700; 
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 16px;
         }
-        .btn-main:hover { background: var(--secondary); }
 
         .sync-badge {
-            display: inline-block; padding: 6px 15px; border-radius: 100px;
-            font-size: 11px; font-weight: 700; margin-bottom: 15px;
-            background: #e0e7ff; color: var(--primary);
+            display: inline-block; padding: 5px 12px; border-radius: 50px;
+            font-size: 11px; font-weight: 700; background: #e0e7ff; color: var(--primary);
+            margin-bottom: 15px;
         }
 
-        /* TABELA */
-        .table-header {
+        /* TABELA ESTILIZADA */
+        .row {
             display: grid;
             grid-template-columns: 1fr 2fr 1fr 1fr;
-            padding: 10px 20px;
-            font-size: 12px;
-            font-weight: 700;
-            color: #8d99ae;
-            text-transform: uppercase;
+            padding: 18px 25px;
+            background: white;
+            margin-bottom: 8px;
+            border-radius: 15px;
+            align-items: center;
+            font-size: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
         }
 
-        .btn-report {
-            background: #2b2d42; color: white; border: none;
-            padding: 20px; border-radius: 15px; width: 100%;
-            font-weight: 700; cursor: pointer; margin-top: 20px;
+        .row-header { 
+            font-weight: 700; 
+            color: #8d99ae; 
+            text-transform: uppercase; 
+            font-size: 12px; 
+            background: transparent;
+            box-shadow: none;
         }
 
-        @media (max-width: 768px) {
-            .form-grid { flex-direction: column; }
-            .card { min-width: 100%; }
+        @media (max-width: 850px) {
+            .dashboard, .form-grid, .row, .row-header { 
+                grid-template-columns: 1fr; /* No celular ele empilha por segurança */
+            }
         }
 
         @media print { .no-print { display: none; } }
@@ -127,44 +129,43 @@
 
 <header>
     <img src="logo.png" alt="Logo CLJ" class="header-logo">
-    <h1 style="margin:0; font-size: 32px;">CLJ Nossa Senhora da Paz</h1>
-    <p style="opacity:0.9; font-size: 16px; margin-top: 10px;">Sistema de Gestão Financeira Cloud</p>
+    <h1>CLJ Nossa Senhora da Paz</h1>
+    <p style="opacity:0.8; margin-top:5px;">Gestão Financeira Cloud</p>
 </header>
 
 <div class="container">
     <div class="dashboard">
-        <div class="card"><h2 class="income" id="ti">R$ 0,00</h2></div>
-        <div class="card"><h2 class="expense" id="te">R$ 0,00</h2></div>
-        <div class="card"><h2 class="balance" id="tt">R$ 0,00</h2></div>
+        <div class="card"><span style="font-size:12px; color:#888;">ENTRADAS</span><h2 class="income" id="ti">R$ 0,00</h2></div>
+        <div class="card"><span style="font-size:12px; color:#888;">SAÍDAS</span><h2 class="expense" id="te">R$ 0,00</h2></div>
+        <div class="card"><span style="font-size:12px; color:#888;">SALDO</span><h2 class="balance" id="tt">R$ 0,00</h2></div>
     </div>
 
     <div class="glass-panel no-print">
-        <div id="status" class="sync-badge">Conectando ao GitHub...</div>
+        <div id="status" class="sync-badge">Sincronizando...</div>
         <div class="form-grid">
-            <input type="date" id="d">
-            <input type="text" id="ds" placeholder="Descrição do lançamento">
-            <input type="number" id="v" placeholder="Valor R$">
-            <select id="t">
-                <option value="income">Entrada</option>
-                <option value="expense">Saída</option>
-            </select>
+            <div><label style="display:block; font-size:12px; margin-bottom:5px; font-weight:600;">Data</label><input type="date" id="d"></div>
+            <div><label style="display:block; font-size:12px; margin-bottom:5px; font-weight:600;">Descrição</label><input type="text" id="ds" placeholder="Ex: Venda de Velas"></div>
+            <div><label style="display:block; font-size:12px; margin-bottom:5px; font-weight:600;">Valor R$</label><input type="number" id="v" placeholder="0,00"></div>
+            <div><label style="display:block; font-size:12px; margin-bottom:5px; font-weight:600;">Tipo</label>
+                <select id="t">
+                    <option value="income">Entrada</option>
+                    <option value="expense">Saída</option>
+                </select>
+            </div>
+            <button class="btn-main" id="saveBtn" onclick="add()">Registrar na Nuvem</button>
         </div>
-        <button class="btn-main" id="saveBtn" onclick="add()">Registrar e Sincronizar</button>
     </div>
 
-    <div class="table-header">
-        <span>Data</span>
-        <span>Descrição</span>
-        <span>Fluxo</span>
-        <span>Valor</span>
+    <div class="row row-header">
+        <span>Data</span><span>Descrição</span><span>Fluxo</span><span>Valor</span>
     </div>
     <div id="tbody"></div>
     
-    <button class="btn-report no-print" onclick="window.print()">Gerar Relatório PDF</button>
+    <button class="btn-main no-print" style="background:#2b2d42;" onclick="window.print()">Imprimir Relatório</button>
 </div>
 
 <script>
-    // MANTENHA O SEU SCRIPT DE INTEGRAÇÃO COM O GITHUB AQUI ABAIXO
+    // IMPORTANTE: Insira seus dados do GitHub aqui
     const GITHUB = {
         token: "SEU_TOKEN_AQUI", 
         user: "teofilo823",
@@ -183,10 +184,10 @@
                 const d = await r.json();
                 const content = JSON.parse(decodeURIComponent(escape(atob(d.content))));
                 entries = content.entries || [];
-                status.innerText = "✅ Sincronizado";
+                status.innerText = "✅ Banco de Dados Online";
                 render();
             }
-        } catch(e) { status.innerText = "❌ Erro ao carregar"; }
+        } catch(e) { status.innerText = "❌ Erro ao carregar dados"; }
     }
 
     async function sync() {
@@ -202,7 +203,7 @@
                 headers: { "Authorization": `token ${GITHUB.token}`, "Content-Type": "application/json" },
                 body: JSON.stringify({ message: "Update", content: body, sha: file.sha })
             });
-            status.innerText = "✅ Salvo";
+            status.innerText = "✅ Salvo com Sucesso";
         } catch(e) { status.innerText = "❌ Erro ao salvar"; }
     }
 
@@ -213,11 +214,11 @@
         entries.sort((a,b) => new Date(b.date) - new Date(a.date));
         entries.forEach(entry => {
             const div = document.createElement('div');
-            div.style = "display:grid; grid-template-columns: 1fr 2fr 1fr 1fr; padding: 15px 20px; background:white; border-radius:10px; margin-bottom:5px; font-size:14px;";
+            div.className = "row";
             div.innerHTML = `
                 <span>${entry.date.split('-').reverse().join('/')}</span>
                 <span style="font-weight:600">${entry.description}</span>
-                <span>${entry.type==='income'?'Entrada':'Saída'}</span>
+                <span style="color:${entry.type==='income'?'#00b894':'#d63031'}; font-weight:700;">${entry.type==='income'?'ENTRADA':'SAÍDA'}</span>
                 <span style="font-weight:700">R$ ${parseFloat(entry.amount).toLocaleString('pt-BR', {minimumFractionDigits:2})}</span>
             `;
             b.appendChild(div);
@@ -233,7 +234,7 @@
         const description = document.getElementById('ds').value;
         const amount = document.getElementById('v').value;
         const type = document.getElementById('t').value;
-        if(!date || !description || !amount) return alert("Preencha tudo!");
+        if(!date || !description || !amount) return alert("Preencha todos os campos!");
         entries.push({ date, description, amount, type });
         render();
         sync();
