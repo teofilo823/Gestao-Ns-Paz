@@ -1,3 +1,10 @@
 {
-    "entries": []
+    "entries": [
+        {
+            "date": "2026-02-16",
+            "description": "Teste",
+            "amount": "0.01",
+            "type": "income"
+        }
+    ]
 }
