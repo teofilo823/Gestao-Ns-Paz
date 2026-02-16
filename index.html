@@ -3,135 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Financeiro | CLJ Ns Paz</title>
+    <title>Gestão Financeira | CLJ Ns Paz</title>
+    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css">
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/locales/pt-br.js"></script>
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
 
         :root {
-            --brand: #3a539b;
-            --brand-light: #eef2ff;
+            --primary: #3a539b;
             --success: #10b981;
             --danger: #ef4444;
-            --bg: #f8fafc;
+            --bg: #f4f7fa;
             --white: #ffffff;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
-        body { background-color: var(--bg); color: #1e293b; padding-bottom: 50px; }
+        body { background-color: var(--bg); color: #1e293b; }
 
-        /* HEADER ESTILIZADO */
+        /* HEADER */
         header {
-            background: linear-gradient(135deg, var(--brand) 0%, #1e293b 100%);
-            padding: 40px 20px 100px;
+            background: linear-gradient(135deg, var(--primary) 0%, #1e293b 100%);
+            padding: 40px 20px 110px;
             text-align: center;
             color: white;
             clip-path: ellipse(150% 100% at 50% 0%);
         }
-        .logo { width: 80px; height: 80px; background: white; border-radius: 20px; padding: 10px; margin-bottom: 15px; box-shadow: 0 10px 15px rgba(0,0,0,0.2); }
-        header h1 { font-size: 28px; font-weight: 800; }
-        header p { opacity: 0.8; font-size: 14px; margin-top: 5px; }
+        .logo-container {
+            width: 90px;
+            height: 90px;
+            background: white;
+            border-radius: 22px;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        .logo-container img { width: 70%; height: auto; }
+        header h1 { font-size: 28px; font-weight: 800; margin-bottom: 5px; }
+        header p { opacity: 0.8; font-size: 14px; }
 
-        .container { max-width: 1100px; margin: -60px auto 0; padding: 0 20px; }
+        .container { max-width: 1100px; margin: -70px auto 50px; padding: 0 20px; }
 
-        /* RESUMO */
+        /* CARDS DE RESUMO */
         .summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 30px; }
-        .s-card { background: var(--white); padding: 25px; border-radius: 24px; box-shadow: 0 10px 25px rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.02); text-align: center; }
-        .s-card span { font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; }
-        .s-card h2 { font-size: 26px; margin-top: 5px; }
+        .s-card { background: var(--white); padding: 25px; border-radius: 24px; box-shadow: 0 10px 25px rgba(0,0,0,0.03); text-align: center; border: 1px solid #edf2f7; }
+        .s-card span { font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; }
+        .s-card h2 { font-size: 24px; margin-top: 8px; font-weight: 800; }
 
-        /* LAYOUT DOIS LADOS (CALENDÁRIO + FORM) */
-        .main-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 30px; align-items: start; }
-
-        .section-card { background: var(--white); padding: 30px; border-radius: 24px; box-shadow: 0 10px 25px rgba(0,0,0,0.03); }
-        
-        /* CALENDÁRIO */
-        #calendar { background: white; padding: 10px; border-radius: 15px; font-size: 13px; }
-        .fc-toolbar-title { font-size: 16px !important; font-weight: 800; text-transform: capitalize; }
-        .fc-button-primary { background-color: var(--brand) !important; border: none !important; }
+        /* CONTEÚDO PRINCIPAL */
+        .main-layout { display: grid; grid-template-columns: 1.6fr 1fr; gap: 25px; }
+        .panel { background: var(--white); padding: 25px; border-radius: 24px; box-shadow: 0 10px 25px rgba(0,0,0,0.03); border: 1px solid #edf2f7; }
 
         /* FORMULÁRIO */
         .form-group { margin-bottom: 15px; }
         label { display: block; font-size: 12px; font-weight: 700; margin-bottom: 6px; color: #64748b; }
         input, select { width: 100%; padding: 12px 16px; border: 2px solid #f1f5f9; border-radius: 12px; font-size: 14px; outline: none; transition: 0.2s; }
-        input:focus { border-color: var(--brand); }
+        input:focus { border-color: var(--primary); background: #f8fafc; }
         
-        .btn-add { width: 100%; background: var(--brand); color: white; padding: 15px; border: none; border-radius: 12px; font-weight: 700; cursor: pointer; transition: 0.3s; margin-top: 10px; }
-        .btn-add:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(58, 83, 155, 0.3); }
+        .btn-add { width: 100%; background: var(--primary); color: white; padding: 16px; border: none; border-radius: 14px; font-weight: 700; cursor: pointer; transition: 0.3s; margin-top: 10px; font-size: 15px; }
+        .btn-add:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(58, 83, 155, 0.25); }
+        .btn-print { width: 100%; background: #1e293b; color: white; padding: 14px; border-radius: 14px; font-weight: 700; border: none; margin-top: 12px; cursor: pointer; }
 
-        /* LOGS */
-        .logs { margin-top: 30px; }
-        .log-item { display: flex; align-items: center; justify-content: space-between; padding: 15px 20px; background: white; border-radius: 16px; margin-bottom: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.02); border-left: 5px solid #ddd; }
+        /* CALENDÁRIO */
+        #calendar { font-size: 13px; }
+        .fc-toolbar-title { font-size: 16px !important; font-weight: 800; }
+        .fc-button-primary { background-color: var(--primary) !important; border: none !important; }
+
+        /* LISTA DE LOGS */
+        .logs-section { margin-top: 30px; }
+        .log-item { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; background: white; border-radius: 18px; margin-bottom: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.01); border-left: 6px solid #e2e8f0; }
         .log-item.income { border-left-color: var(--success); }
         .log-item.expense { border-left-color: var(--danger); }
-        .log-info b { display: block; font-size: 14px; }
-        .log-info small { color: #94a3b8; font-size: 11px; }
-        .log-val { font-weight: 800; font-size: 15px; }
+        .log-info b { display: block; font-size: 15px; color: #1e293b; }
+        .log-info small { color: #94a3b8; font-size: 12px; font-weight: 500; }
+        .log-val { font-weight: 800; font-size: 16px; }
 
-        .btn-print { width: 100%; background: #1e293b; color: white; padding: 15px; border-radius: 12px; font-weight: 700; border: none; margin-top: 20px; cursor: pointer; }
-
-        @media (max-width: 900px) { .main-grid { grid-template-columns: 1fr; } .summary-grid { grid-template-columns: 1fr; } }
-        @media print { .no-print { display: none; } .container { margin-top: 30px; } }
+        @media (max-width: 900px) { .main-layout, .summary-grid { grid-template-columns: 1fr; } }
+        @media print { .no-print { display: none; } header { clip-path: none; padding-bottom: 40px; } .container { margin-top: 20px; } }
     </style>
 </head>
 <body>
 
 <header>
-    <img src="logo.png" alt="Logo" class="logo">
-    <h1>CLJ Ns Paz</h1>
-    <p>Gestão Financeira e Controle de Lançamentos</p>
+    <div class="logo-container">
+        <img src="logo.png" alt="Logo CLJ">
+    </div>
+    <h1>CLJ Nossa Senhora da Paz</h1>
+    <p>Gestão de Caixa e Lançamentos Financeiros</p>
 </header>
 
 <div class="container">
     <div class="summary-grid">
         <div class="s-card"><span>Entradas</span><h2 style="color:var(--success)" id="ti">R$ 0,00</h2></div>
         <div class="s-card"><span>Saídas</span><h2 style="color:var(--danger)" id="te">R$ 0,00</h2></div>
-        <div class="s-card"><span>Saldo Geral</span><h2 style="color:var(--brand)" id="tt">R$ 0,00</h2></div>
+        <div class="s-card"><span>Saldo Atual</span><h2 style="color:var(--primary)" id="tt">R$ 0,00</h2></div>
     </div>
 
-    <div class="main-grid">
-        <div class="section-card">
-            <h3 style="margin-bottom:20px; font-size:18px;">📅 Agenda Financeira</h3>
+    <div class="main-layout">
+        <div class="panel">
+            <h3 style="margin-bottom:20px;">📅 Movimentações no Mês</h3>
             <div id="calendar"></div>
         </div>
 
-        <div class="section-card no-print">
-            <h3 style="margin-bottom:20px; font-size:18px;">📝 Novo Registro</h3>
+        <div class="panel no-print">
+            <h3 style="margin-bottom:20px;">📝 Novo Registro</h3>
+            <div class="form-group"><label>Data</label><input type="date" id="d"></div>
+            <div class="form-group"><label>Descrição</label><input type="text" id="ds" placeholder="Ex: Venda de doces"></div>
+            <div class="form-group"><label>Valor (R$)</label><input type="number" id="v" placeholder="0,00"></div>
             <div class="form-group">
-                <label>Data do Evento</label>
-                <input type="date" id="d">
-            </div>
-            <div class="form-group">
-                <label>Descrição</label>
-                <input type="text" id="ds" placeholder="Ex: Doação de Velas">
-            </div>
-            <div class="form-group">
-                <label>Valor (R$)</label>
-                <input type="number" id="v" placeholder="0,00">
-            </div>
-            <div class="form-group">
-                <label>Fluxo</label>
+                <label>Tipo</label>
                 <select id="t">
-                    <option value="income">Entrada (Dinheiro Entrando)</option>
-                    <option value="expense">Saída (Pagamento/Gasto)</option>
+                    <option value="income">Entrada (+)</option>
+                    <option value="expense">Saída (-)</option>
                 </select>
             </div>
-            <button class="btn-add" onclick="add()">Salvar Lançamento</button>
+            <button class="btn-add" onclick="add()">Registrar no Sistema</button>
             <button class="btn-print" onclick="window.print()">🖨️ Imprimir Relatório</button>
         </div>
     </div>
 
-    <div class="logs">
-        <h3 style="margin: 20px 0; font-size: 18px;">📋 Histórico de Movimentações</h3>
+    <div class="logs-section">
+        <h3 style="margin-bottom:15px;">📋 Histórico de Logs</h3>
         <div id="tbody"></div>
     </div>
 </div>
 
 <script>
     const GITHUB = {
-        token: "SEU_TOKEN_AQUI", 
+        token: "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I", // <--- COLOQUE SEU TOKEN AQUI
         user: "teofilo823",
         repo: "Gestao-Ns-Paz",
         path: "database.json"
@@ -140,20 +143,29 @@
     let entries = [];
     let calendar;
 
-    // Inicializa o Calendário
+    // Inicialização
     document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
+        const calendarEl = document.getElementById('calendar');
         calendar = new FullCalendar.Calendar(calendarEl, {
             locale: 'pt-br',
             initialView: 'dayGridMonth',
             height: 'auto',
-            events: []
+            headerToolbar: { left: 'prev,next', center: 'title', right: '' }
         });
         calendar.render();
         load();
     });
 
+    // Carregar do GitHub e LocalStorage (Segurança dupla)
     async function load() {
+        // Primeiro tenta carregar o que está salvo no navegador para ser rápido
+        const localData = localStorage.getItem('clj_data');
+        if(localData) {
+            entries = JSON.parse(localData);
+            render();
+        }
+
+        // Depois busca a versão oficial do GitHub
         try {
             const url = `https://api.github.com/repos/${GITHUB.user}/${GITHUB.repo}/contents/${GITHUB.path}`;
             const r = await fetch(url, { headers: { "Authorization": `token ${GITHUB.token}` } });
@@ -161,56 +173,61 @@
                 const d = await r.json();
                 const content = JSON.parse(decodeURIComponent(escape(atob(d.content))));
                 entries = content.entries || [];
+                localStorage.setItem('clj_data', JSON.stringify(entries));
                 render();
             }
-        } catch(e) { console.log("Erro ao carregar"); }
+        } catch(e) { console.warn("Modo Offline ou Token ausente."); }
     }
 
+    // Sincronizar com o arquivo database.json na pasta do GitHub
     async function sync() {
+        localStorage.setItem('clj_data', JSON.stringify(entries));
         try {
             const url = `https://api.github.com/repos/${GITHUB.user}/${GITHUB.repo}/contents/${GITHUB.path}`;
             const get = await fetch(url, { headers: { "Authorization": `token ${GITHUB.token}` } });
             const file = await get.json();
+            
             const body = btoa(unescape(encodeURIComponent(JSON.stringify({ entries }, null, 4))));
+            
             await fetch(url, {
                 method: "PUT",
                 headers: { "Authorization": `token ${GITHUB.token}`, "Content-Type": "application/json" },
-                body: JSON.stringify({ message: "Update", content: body, sha: file.sha })
+                body: JSON.stringify({ message: "Atualização de Caixa", content: body, sha: file.sha })
             });
-        } catch(e) { alert("Erro ao sincronizar com o banco de dados."); }
+        } catch(e) { console.error("Erro ao subir para o GitHub."); }
     }
 
     function render() {
         const b = document.getElementById('tbody');
         b.innerHTML = '';
         let i=0, e=0;
-        let calendarEvents = [];
+        let events = [];
 
         entries.sort((a,b) => new Date(b.date) - new Date(a.date));
 
-        entries.forEach(entry => {
-            // Logs
-            const div = document.createElement('div');
-            div.className = `log-item ${entry.type}`;
-            div.innerHTML = `
+        entries.forEach(item => {
+            // Desenhar Logs
+            const log = document.createElement('div');
+            log.className = `log-item ${item.type}`;
+            log.innerHTML = `
                 <div class="log-info">
-                    <b>${entry.description}</b>
-                    <small>${entry.date.split('-').reverse().join('/')}</small>
+                    <b>${item.description}</b>
+                    <small>${item.date.split('-').reverse().join('/')}</small>
                 </div>
-                <div class="log-val" style="color:${entry.type==='income'?'var(--success)':'var(--danger)'}">
-                    ${entry.type==='income'?'+':'-'} R$ ${parseFloat(entry.amount).toLocaleString('pt-BR', {minimumFractionDigits:2})}
+                <div class="log-val" style="color:${item.type==='income'?'var(--success)':'var(--danger)'}">
+                    ${item.type==='income'?'+':'-'} R$ ${parseFloat(item.amount).toLocaleString('pt-BR', {minimumFractionDigits:2})}
                 </div>
             `;
-            b.appendChild(div);
+            b.appendChild(log);
 
-            // Cálculos
-            if(entry.type==='income') i += parseFloat(entry.amount); else e += parseFloat(entry.amount);
+            // Somar totais
+            if(item.type==='income') i += parseFloat(item.amount); else e += parseFloat(item.amount);
 
-            // Calendário
-            calendarEvents.push({
-                title: `${entry.type==='income'?'+':'-'} R$ ${entry.amount}`,
-                start: entry.date,
-                color: entry.type === 'income' ? '#10b981' : '#ef4444'
+            // Preparar Calendário
+            events.push({
+                title: `${item.type==='income'?'+':'-'} R$ ${item.amount}`,
+                start: item.date,
+                color: item.type === 'income' ? '#10b981' : '#ef4444'
             });
         });
 
@@ -219,7 +236,7 @@
         document.getElementById('tt').innerText = `R$ ${(i-e).toLocaleString('pt-BR', {minimumFractionDigits:2})}`;
 
         calendar.removeAllEvents();
-        calendar.addEventSource(calendarEvents);
+        calendar.addEventSource(events);
     }
 
     function add() {
@@ -227,12 +244,13 @@
         const description = document.getElementById('ds').value;
         const amount = document.getElementById('v').value;
         const type = document.getElementById('t').value;
-        if(!date || !description || !amount) return alert("Preencha todos os campos.");
+
+        if(!date || !description || !amount) return alert("Por favor, preencha todos os campos.");
 
         entries.push({ date, description, amount, type });
         render();
         sync();
-        
+
         document.getElementById('ds').value = '';
         document.getElementById('v').value = '';
     }
