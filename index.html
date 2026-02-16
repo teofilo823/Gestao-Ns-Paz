@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financeiro | CLJ Ns Paz</title>
+    <link rel="icon" type="image/png" href="logo.png">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+        :root {
+            --primary: #3a539b;
+            --secondary: #5d79ae;
+            --bg: #f0f2f5;
+            --white: #ffffff;
+            --green: #00b894;
+            --red: #d63031;
+            --text: #2d3436;
+        }
+
+        @media print {
+            .glass-panel, .btn-print, .btn-danger, .no-print, .sync-status { display: none !important; }
+            body { background: white; }
+            .main-container { margin-top: 0; max-width: 100%; }
+            .card { border: 1px solid #ddd; box-shadow: none !important; }
+            header { background: white !important; color: black !important; border-bottom: 2px solid var(--primary); }
+            .header-logo { filter: none !important; }
+        }
+
+        * { box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--bg); margin: 0; padding: 0; color: var(--text); }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 40px 20px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .header-logo { width: 100px; height: auto; margin-bottom: 15px; }
+        header h1 { margin: 0; font-size: 28px; font-weight: 700; }
+
+        .main-container { max-width: 1000px; margin: -40px auto 40px; padding: 0 20px; }
+
+        .dashboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .card { background: var(--white); padding: 25px; border-radius: 16px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); text-align: center; }
+        .card span { display: block; font-size: 14px; text-transform: uppercase; color: #636e72; margin-bottom: 10px; font-weight: 600; }
+        .card strong { font-size: 24px; display: block; }
+
+        .income-text { color: var(--green); }
+        .expense-text { color: var(--red); }
+        .profit-text { color: var(--primary); }
+
+        .glass-panel { background: var(--white); padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); margin-bottom: 30px; }
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
+
+        input, select { width: 100%; padding: 14px; border: 2px solid #edf2f7; border-radius: 12px; font-size: 15px; outline: none; }
+        
+        .actions-bar { margin-bottom: 20px; display: flex; gap: 10px; align-items: center; }
+        .btn-add { background: var(--primary); color: white; border: none; padding: 16px; border-radius: 12px; font-weight: 700; cursor: pointer; width: 100%; margin-top: 10px; }
+        .btn-print { background: #2d3436; color: white; border: none; padding: 12px 25px; border-radius: 10px; cursor: pointer; font-weight: 600; }
+        .btn-danger { background: var(--red); color: white; border: none; padding: 12px 25px; border-radius: 10px; cursor: pointer; font-weight: 600; }
+
+        .sync-status { font-size: 12px; font-weight: 700; color: var(--secondary); margin-left: auto; }
+
+        .table-container { background: var(--white); border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        table { width: 100%; border-collapse: collapse; }
+        th { background: #f8f9fa; padding: 18px; text-align: left; font-size: 13px; color: #636e72; text-transform: uppercase; }
+        td { padding: 18px; border-top: 1px solid #f1f3f5; font-size: 15px; }
+
+        .badge { padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; }
+        .badge-income { background: #e6fffb; color: var(--green); }
+        .badge-expense { background: #fff5f5; color: var(--red); }
+
+        .monthly-report { background: #fff9db; border: 2px solid #fab005; color: #856404; padding: 20px; border-radius: 12px; margin-bottom: 25px; display: none; }
+    </style>
+</head>
+<body>
+
+<header>
+    <img src="logo.png" alt="Logo CLJ" class="header-logo">
+    <h1>CLJ Ns Paz</h1>
+    <p>Gestão Financeira Sincronizada</p>
+</header>
+
+<div class="main-container">
+    
+    <div id="monthly-alert" class="monthly-report">
+        <strong>📅 Fechamento Mensal (Dia 01)</strong>
+        <p id="monthly-text"></p>
+    </div>
+
+    <div class="dashboard">
+        <div class="card"><span>Ganhos Totais</span><strong class="income-text" id="total-income">R$ 0,00</strong></div>
+        <div class="card"><span>Gastos Totais</span><strong class="expense-text" id="total-expense">R$ 0,00</strong></div>
+        <div class="card"><span>Lucro Líquido</span><strong class="profit-text" id="total-profit">R$ 0,00</strong></div>
+    </div>
+
+    <div class="actions-bar no-print">
+        <button class="btn-print" onclick="window.print()">🖨️ Imprimir</button>
+        <button class="btn-danger" onclick="clearData()">⚠️ Zerar Banco de Dados</button>
+        <span id="sync-label" class="sync-status">Carregando dados...</span>
+    </div>
+
+    <div class="glass-panel no-print">
+        <h3 style="margin-top:0">Novo Lançamento</h3>
+        <div class="form-grid">
+            <input type="date" id="date">
+            <input type="text" id="description" placeholder="Descrição">
+            <input type="number" id="amount" placeholder="Valor R$">
+            <select id="type">
+                <option value="income">Entrada</option>
+                <option value="expense">Saída</option>
+            </select>
+            <button class="btn-add" id="btn-save" onclick="addEntry()">Registrar e Salvar Nuvem</button>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <div style="padding: 20px; font-weight: 700; border-bottom: 1px solid #f1f3f5;">📜 Histórico Global</div>
+        <table id="log-table">
+            <thead>
+                <tr><th>Data</th><th>Descrição</th><th>Tipo</th><th>Valor</th></tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    // --- CONFIGURAÇÃO DO GITHUB ---
+    const CONFIG = {
+        token: "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", // Gere um Personal Access Token no GitHub
+        owner: "teofilo823",
+        repo: "Gestao-Ns-Paz",
+        path: "database.json"
+    };
+
+    let entries = [];
+
+    // 1. CARREGAR DADOS DO GITHUB
+    async function loadFromGitHub() {
+        const label = document.getElementById('sync-label');
+        try {
+            const url = `https://api.github.com/repos/${CONFIG.owner}/${CONFIG.repo}/contents/${CONFIG.path}`;
+            const response = await fetch(url, {
+                headers: { "Authorization": `token ${CONFIG.token}` }
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                // Decodifica o conteúdo Base64 do GitHub
+                const content = JSON.parse(decodeURIComponent(escape(atob(data.content))));
+                entries = content.entries || [];
+                label.innerText = "✅ Sincronizado com Nuvem";
+                updateUI(false); // Atualiza a tela sem salvar de volta
+            }
+        } catch (e) {
+            label.innerText = "❌ Erro ao carregar dados";
+            console.error(e);
+        }
+    }
+
+    // 2. SALVAR DADOS NO GITHUB
+    async function saveToGitHub() {
+        const label = document.getElementById('sync-label');
+        const btn = document.getElementById('btn-save');
+        label.innerText = "⏳ Salvando na nuvem...";
+        btn.disabled = true;
+
+        try {
+            const url = `https://api.github.com/repos/${CONFIG.owner}/${CONFIG.repo}/contents/${CONFIG.path}`;
+            
+            // Pega o SHA do arquivo atual (necessário para atualizar)
+            const getFile = await fetch(url, {
+                headers: { "Authorization": `token ${CONFIG.token}` }
+            });
+            const fileData = await getFile.json();
+            const sha = fileData.sha;
+
+            // Prepara o conteúdo
+            const newContent = btoa(unescape(encodeURIComponent(JSON.stringify({ entries: entries }, null, 4))));
+
+            const response = await fetch(url, {
+                method: "PUT",
+                headers: {
+                    "Authorization": `token ${CONFIG.token}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    message: "Atualização de financeiro via Web",
+                    content: newContent,
+                    sha: sha
+                })
+            });
+
+            if (response.ok) {
+                label.innerText = "✅ Salvo com sucesso!";
+            } else {
+                label.innerText = "❌ Erro ao salvar";
+            }
+        } catch (e) {
+            label.innerText = "❌ Erro de conexão";
+        } finally {
+            btn.disabled = false;
+        }
+    }
+
+    function updateUI(shouldSave = true) {
+        const tbody = document.querySelector('#log-table tbody');
+        tbody.innerHTML = '';
+        let inc = 0, exp = 0;
+
+        entries.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        entries.forEach(entry => {
+            const row = tbody.insertRow();
+            row.innerHTML = `
+                <td>${entry.date.split('-').reverse().join('/')}</td>
+                <td>${entry.description}</td>
+                <td><span class="badge ${entry.type === 'income' ? 'badge-income' : 'badge-expense'}">${entry.type.toUpperCase()}</span></td>
+                <td>R$ ${parseFloat(entry.amount).toLocaleString('pt-BR', {minimumFractionDigits: 2})}</td>
+            `;
+            if (entry.type === 'income') inc += parseFloat(entry.amount);
+            else exp += parseFloat(entry.amount);
+        });
+
+        document.getElementById('total-income').innerText = `R$ ${inc.toLocaleString('pt-BR')}`;
+        document.getElementById('total-expense').innerText = `R$ ${exp.toLocaleString('pt-BR')}`;
+        document.getElementById('total-profit').innerText = `R$ ${(inc - exp).toLocaleString('pt-BR')}`;
+
+        if (shouldSave) saveToGitHub();
+        checkMonthlyReport(inc - exp);
+    }
+
+    function addEntry() {
+        const date = document.getElementById('date').value;
+        const description = document.getElementById('description').value;
+        const amount = document.getElementById('amount').value;
+        const type = document.getElementById('type').value;
+
+        if (!date || !description || !amount) return alert("Preencha tudo!");
+
+        entries.push({ date, description, amount, type });
+        updateUI(true);
+        
+        document.getElementById('description').value = '';
+        document.getElementById('amount').value = '';
+    }
+
+    function clearData() {
+        if (confirm("Isso apagará TUDO na nuvem. Tem certeza?")) {
+            entries = [];
+            updateUI(true);
+        }
+    }
+
+    function checkMonthlyReport(profit) {
+        if (new Date().getDate() === 1) {
+            document.getElementById('monthly-alert').style.display = 'block';
+            document.getElementById('monthly-text').innerText = `Lucro atual: R$ ${profit.toLocaleString('pt-BR')}`;
+        }
+    }
+
+    document.getElementById('date').valueAsDate = new Date();
+    loadFromGitHub(); // Inicia carregando da nuvem
+</script>
+</body>
+</html>
